@@ -1,0 +1,75 @@
+Para resolver el problema con el botón de detener la reproducción, aquí hay algunas correcciones y mejoras que puedes realizar en el código que has proporcionado.
+1. Corregir la conexión del botón de detener
+El botón de detener (self.stop_button) actualmente está conectado al método play_audio, en lugar de al método stop_audio. Cambia esta conexión para que el botón realice la acción correcta.
+2. Habilitar/Deshabilitar botones adecuadamente
+Asegúrate de que los botones se habiliten y deshabiliten en función de si se está reproduciendo audio o no.
+Código corregido para create_audio_buttons:
+python
+def create_audio_buttons(self):
+    """Crear los botones para validar, convertir, reproducir y guardar audio."""
+    log_message("debug", "Creando botones de audio.")
+
+    audio_controls_widget = QWidget(self)
+    audio_controls_widget.setContentsMargins(0, 0, 0, 0)
+    self.audio_button_layout = QHBoxLayout(audio_controls_widget)
+    self.audio_button_layout.setContentsMargins(0, 0, 0, 8)
+
+    # Botones para validar, convertir, reproducir y guardar audio
+    self.verify_button = QPushButton("Validar Configuración")
+    self.verify_button.clicked.connect(self.write_file_configuration)
+    self.audio_button_layout.addWidget(self.verify_button)
+
+    self.convert_button = QPushButton("Convertir a MP3")
+    self.convert_button.clicked.connect(self.convert_text)
+    self.convert_button.setEnabled(False)  # Deshabilitado por defecto
+    self.audio_button_layout.addWidget(self.convert_button)
+
+    self.play_button = QPushButton("Reproducir Audio")
+    self.play_button.clicked.connect(self.play_audio)
+    self.play_button.setEnabled(False)  # Deshabilitado por defecto
+    self.audio_button_layout.addWidget(self.play_button)
+
+    self.stop_button = QPushButton("Detener reproducción")
+    self.stop_button.clicked.connect(self.stop_audio)  # Corregido aquí
+    self.stop_button.setEnabled(False)  # Deshabilitado por defecto
+    self.audio_button_layout.addWidget(self.stop_button)
+
+    self.save_button = QPushButton("Guardar Audio")
+    self.save_button.clicked.connect(self.save_audio)
+    self.save_button.setEnabled(False)  # Deshabilitado por defecto
+    self.audio_button_layout.addWidget(self.save_button)
+
+    log_message("debug", "Botones de audio creados y añadidos al layout.")
+    return audio_controls_widget
+
+3. Habilitar y deshabilitar botones en play_audio y stop_audio
+Además, necesitas habilitar y deshabilitar los botones apropiadamente en los métodos play_audio y stop_audio. Aquí tienes las modificaciones:
+python
+def play_audio(self):
+    from ..utils.media_control import MediaPlayer
+    """Reproduce el archivo de audio temporal generado."""
+    try:
+        MediaPlayer().play(is_audio=True)
+        log_message("success", "Audio reproducido exitosamente.")
+        self.play_button.setEnabled(False)  # Deshabilitar el botón de reproducir
+        self.stop_button.setEnabled(True)    # Habilitar el botón de detener
+    except Exception as e:
+        log_message("error", f"Error al reproducir audio: {e}", exc_info=True)
+        show_status_message(f"Error al reproducir el archivo de audio: {e}", "error")
+
+def stop_audio(self):
+    from ..utils.media_control import MediaPlayer
+    """Detiene la reproducción del archivo de audio temporal."""
+    try:
+        MediaPlayer().stop()
+        log_message("success", "Audio detenido exitosamente.")
+        self.play_button.setEnabled(True)    # Habilitar el botón de reproducir
+        self.stop_button.setEnabled(False)    # Deshabilitar el botón de detener
+    except Exception as e:
+        log_message("error", f"Error al detener el audio en reproducción.", exc_info=True)
+        show_status_message("Error al detener el audio en reproducción.", "error")
+
+Resumen de Cambios
+Conexión correcta del botón de detener: Cambié la conexión del botón de detener para que llame al método stop_audio.
+Habilitar y deshabilitar botones: Modifiqué los métodos play_audio y stop_audio para habilitar y deshabilitar los botones de reproducir y detener según sea necesario.
+Con estos cambios, el botón de detener debería funcionar correctamente, deteniendo la reproducción en lugar de reiniciarla. Asegúrate de que la lógica del botón en la interfaz gráfica está correctamente conectada y que no hay errores adicionales que puedan interferir con el funcionamiento de MediaPlayer.

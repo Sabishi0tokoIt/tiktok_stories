@@ -1,0 +1,11 @@
+2024-10-13 22:25:38,839 - SUCCESS - [debug.py:145] - Sistema de logging iniciado correctamente. - /home/sabishi/tiktok/text2speech/main.py:17
+2024-10-13 22:25:38,887 - SUCCESS - [debug.py:145] - Ventana centrada en la pantalla. - /home/sabishi/tiktok/text2speech/start.py:45
+2024-10-13 22:25:38,916 - SUCCESS - [debug.py:145] - Imagen de fondo cargada correctamente. - /home/sabishi/tiktok/text2speech/start.py:59
+2024-10-13 22:25:38,954 - SUCCESS - [debug.py:145] - Botones creados y layout establecido. - /home/sabishi/tiktok/text2speech/start.py:80
+2024-10-13 22:25:40,837 - SUCCESS - [debug.py:145] - Interfaz gráfica configurada correctamente. - /home/sabishi/tiktok/text2speech/app/gui.py:43
+2024-10-13 22:25:40,842 - SUCCESS - [debug.py:145] - Nueva aplicación TikTokStoriesApp mostrada. - /home/sabishi/tiktok/text2speech/start.py:92
+2024-10-13 22:25:48,158 - SUCCESS - [debug.py:145] - Cliente de Google Cloud Text-to-Speech reutilizado exitosamente. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:46
+2024-10-13 22:25:48,158 - SUCCESS - [debug.py:145] - Actualizador de idiomas inicializado correctamente. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:63
+2024-10-13 22:25:48,164 - SUCCESS - [debug.py:145] - audio_controls creado: %s - /home/sabishi/tiktok/text2speech/app/gui.py:106
+2024-10-13 22:25:48,169 - SUCCESS - [debug.py:145] - Cambiado de TranslateControl a AudioControls. - /home/sabishi/tiktok/text2speech/app/gui.py:116
+2024-10-13 22:25:49,328 - SUCCESS - [debug.py:145] - AudioControls ocultados. - /home/sabishi/tiktok/text2speech/app/gui.py:125

@@ -1,0 +1,21 @@
+2024-10-13 22:25:38,838 - DEBUG - [debug.py:114] - Logging configurado correctamente. Archivos de log creados para cada nivel.
+2024-10-13 22:25:42,885 - DEBUG - [debug.py:145] - Iniciando cambio de TranslateControl a AudioControls. - /home/sabishi/tiktok/text2speech/app/gui.py:96
+2024-10-13 22:25:42,885 - DEBUG - [debug.py:145] - Creando nuevos AudioControls. - /home/sabishi/tiktok/text2speech/app/gui.py:104
+2024-10-13 22:25:42,887 - DEBUG - [requests.py:186] - Making request: POST https://oauth2.googleapis.com/token
+2024-10-13 22:25:42,889 - DEBUG - [connectionpool.py:1021] - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2024-10-13 22:25:48,118 - DEBUG - [connectionpool.py:474] - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2024-10-13 22:25:48,122 - DEBUG - [debug.py:145] - Resultado de la función check_token_and_auth: None - /home/sabishi/tiktok/text2speech/app/utils/debug.py:181
+2024-10-13 22:25:48,122 - DEBUG - [debug.py:145] - Instancia de GoogleCloudAPIManager obtenida. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:30
+2024-10-13 22:25:48,158 - DEBUG - [debug.py:145] - Idiomas obtenidos: ['Español', 'English'] - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:56
+2024-10-13 22:25:48,158 - DEBUG - [debug.py:145] - LanguagesUpdater initialized with empty mappings. - /home/sabishi/tiktok/text2speech/app/modules/audio/languages_update.py:19
+2024-10-13 22:25:48,159 - DEBUG - [debug.py:145] - Iniciando controles de audio. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:71
+2024-10-13 22:25:48,159 - DEBUG - [debug.py:145] - Se creó el widget de entrada de texto con menú contextual. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:100
+2024-10-13 22:25:48,162 - DEBUG - [debug.py:145] - Widgets vinculados para el actualizador de idiomas. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:182
+2024-10-13 22:25:48,162 - DEBUG - [debug.py:145] - Creando controles deslizantes para velocidad y tono. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:224
+2024-10-13 22:25:48,163 - DEBUG - [debug.py:145] - Controles deslizantes para velocidad y tono creados. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:256
+2024-10-13 22:25:48,163 - DEBUG - [debug.py:145] - Creando botones de audio. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:187
+2024-10-13 22:25:48,164 - DEBUG - [debug.py:145] - Botones de audio creados y añadidos al layout. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:219
+2024-10-13 22:25:49,326 - DEBUG - [debug.py:145] - Iniciando cambio de AudioControls a VideoControls. - /home/sabishi/tiktok/text2speech/app/gui.py:119
+2024-10-13 22:25:49,330 - DEBUG - [debug.py:145] - Creando nuevos VideoControls. - /home/sabishi/tiktok/text2speech/app/gui.py:131
+2024-10-13 22:25:49,331 - DEBUG - [debug.py:145] - Inicializando la interfaz de usuario de VideoControls. - /home/sabishi/tiktok/text2speech/app/modules/gui_video.py:25
+2024-10-13 22:25:51,380 - DEBUG - [debug.py:145] - Aplicación terminada. - /home/sabishi/tiktok/text2speech/main.py:49

@@ -1,0 +1,21 @@
+Hacer un debug al archivo y quiero que tengas encuenta lo siguiente:
+
+1. El debug viene de utils.py que incluye setup_logging(), log_message()y decorador log_event_and_function().
+2. setup_logging() ya se inicia en main.py no se debe agregar otra vez para que no haya un duplicado.
+3. Si hay print() que se elimine para sustituir por el nuevo debug.
+4. Si ya hay un debug anterior que se sustituya por log_message().
+5. Cualquier logging o debug anteriores deben ser removidos y sustituidos por log_mesagge().
+6. Agregar los decoradores de eventos @log_event_and_function().
+7. El debug debe ser completo que se ingrese en todos los lugares para que sea bien hecho especialmente en los lugares que puedan presentar errores o critical.
+
+
+Guarda en la memria este archivo que tiene utilidades necesarias para la aplicación incluido el debug, en este chat quiero que me ayudes a hacer un debug profesional de todos mis archivos para ver que todo este funcionando bien, así que eso ten en cuenta para este chat que cada archivo que suba necesito debug, esto es lo que quiero:
+
+1. que sea profesional
+2. que use funciones del sistema para hacer revision
+3. que tenga warning, error, success para saber que es cada mensaje
+4. que se guarde en DEBUBG/ un archivo con el nombre debug-fecha-hora
+5. que sea personalizado para saber que es exactamente lo que pasa
+
+Asi es como tengo mi debug que se va a usar desde utils.py
+

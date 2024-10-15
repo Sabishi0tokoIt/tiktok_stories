@@ -1,0 +1,26 @@
+2024-10-13 22:29:52,548 - INFO - [debug.py:145] - Ventana principal inicializada correctamente. - /home/sabishi/tiktok/text2speech/main.py:27
+2024-10-13 22:29:52,548 - INFO - [debug.py:145] - Evento: Aplicación principal, Función: window.show() - /home/sabishi/tiktok/text2speech/app/utils/debug.py:157
+2024-10-13 22:29:52,614 - INFO - [debug.py:145] - Aplicación principal iniciada correctamente. - /home/sabishi/tiktok/text2speech/main.py:32
+2024-10-13 22:29:52,990 - INFO - [debug.py:145] - Tecla Enter presionada, ejecutando acción del botón INICIAR. - /home/sabishi/tiktok/text2speech/start.py:101
+2024-10-13 22:29:52,991 - INFO - [debug.py:145] - Botón INICIAR presionado. - /home/sabishi/tiktok/text2speech/start.py:84
+2024-10-13 22:29:53,003 - INFO - [debug.py:145] - Widget de título creado con entrada y traducción. - /home/sabishi/tiktok/text2speech/app/gui.py:276
+2024-10-13 22:29:53,003 - INFO - [debug.py:145] - Inicializando la interfaz de usuario para traducción. - /home/sabishi/tiktok/text2speech/app/modules/gui_translate.py:26
+2024-10-13 22:29:53,005 - INFO - [debug.py:145] - Campo de entrada de texto creado. - /home/sabishi/tiktok/text2speech/app/modules/gui_translate.py:50
+2024-10-13 22:29:53,005 - INFO - [debug.py:145] - Campo de traducción creado. - /home/sabishi/tiktok/text2speech/app/modules/gui_translate.py:57
+2024-10-13 22:29:53,006 - INFO - [debug.py:145] - Campo de título creado. - /home/sabishi/tiktok/text2speech/app/modules/gui_translate.py:84
+2024-10-13 22:29:53,007 - INFO - [debug.py:145] - Campo de traducción del título creado. - /home/sabishi/tiktok/text2speech/app/modules/gui_translate.py:91
+2024-10-13 22:29:53,008 - INFO - [debug.py:145] - Widget de título creado con entrada y traducción. - /home/sabishi/tiktok/text2speech/app/modules/gui_translate.py:111
+2024-10-13 22:29:53,009 - INFO - [debug.py:145] - Botón de traducción creado. - /home/sabishi/tiktok/text2speech/app/modules/gui_translate.py:137
+2024-10-13 22:29:53,009 - INFO - [debug.py:145] - Controles de traducción inicializados. - /home/sabishi/tiktok/text2speech/app/modules/gui_translate.py:43
+2024-10-13 22:29:56,115 - INFO - [debug.py:145] - Inicializando OAuthCredentialsConfig... - /home/sabishi/tiktok/text2speech/app/config/credentials.py:25
+2024-10-13 22:29:56,115 - INFO - [debug.py:145] - Evento: check_token_and_auth_event, Ejecutando función: check_token_and_auth - /home/sabishi/tiktok/text2speech/app/utils/debug.py:173
+2024-10-13 22:29:56,115 - INFO - [debug.py:145] - Token existente encontrado, cargándolo... - /home/sabishi/tiktok/text2speech/app/config/credentials.py:59
+2024-10-13 22:29:56,116 - INFO - [debug.py:145] - Token expirado, renovando... - /home/sabishi/tiktok/text2speech/app/config/credentials.py:67
+2024-10-13 22:29:57,006 - INFO - [debug.py:145] - Token renovado exitosamente. - /home/sabishi/tiktok/text2speech/app/config/credentials.py:69
+2024-10-13 22:29:57,008 - INFO - [debug.py:145] - Token y Project ID guardados en /home/sabishi/tiktok/text2speech/credentials/token.json - /home/sabishi/tiktok/text2speech/app/config/credentials.py:140
+2024-10-13 22:29:57,010 - INFO - [debug.py:145] - Credenciales obtenidas correctamente. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:36
+2024-10-13 22:29:57,010 - INFO - [debug.py:145] - Solicitando cliente para el servicio: texttospeech - /home/sabishi/tiktok/text2speech/app/config/credentials.py:162
+2024-10-13 22:29:57,040 - INFO - [debug.py:145] - Cliente Text-to-Speech creado exitosamente. - /home/sabishi/tiktok/text2speech/app/config/credentials.py:168
+2024-10-13 22:29:57,040 - INFO - [debug.py:145] - Language mappings initialized as empty dictionaries. - /home/sabishi/tiktok/text2speech/app/modules/audio/languages_update.py:27
+2024-10-13 22:29:57,041 - INFO - [debug.py:145] - Contenido de los archivos cargado en el widget de entrada de texto. - /home/sabishi/tiktok/text2speech/app/modules/gui_audio.py:126
+2024-10-13 22:29:57,042 - INFO - [debug.py:145] - Widgets vinculados a funciones de actualización. - /home/sabishi/tiktok/text2speech/app/modules/audio/languages_update.py:231

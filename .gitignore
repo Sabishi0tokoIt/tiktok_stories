@@ -1,0 +1,10 @@
+# Excluir archivos de video
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.flv
+*.wmv
+*.webm
+python3.11.core
+credentials/google-credentials.json

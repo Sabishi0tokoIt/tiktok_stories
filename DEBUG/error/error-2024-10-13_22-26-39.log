@@ -1,0 +1,19 @@
+2024-10-13 22:26:44,138 - ERROR - [debug.py:145] - Error al cambiar de controles: %s
+Traceback (most recent call last):
+  File "/home/sabishi/tiktok/text2speech/app/gui.py", line 132, in next_step
+    self.video_controls = VideoControls(self)
+                          ^^^^^^^^^^^^^^^^^^^
+  File "/home/sabishi/tiktok/text2speech/app/modules/gui_video.py", line 19, in __init__
+    self.init_ui()
+  File "/home/sabishi/tiktok/text2speech/app/modules/gui_video.py", line 27, in init_ui
+    self.show_media_widget()
+  File "/home/sabishi/tiktok/text2speech/app/modules/gui_video.py", line 71, in show_media_widget
+    self.video_sink = Gst.ElementFactory.make("gtksink", "video_sink")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/gi/overrides/Gst.py", line 292, in make
+    return Gst.ElementFactory.make(factory_name, instance_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/gi/overrides/Gst.py", line 751, in fake_method
+    raise NotInitialized("Please call Gst.init(argv) before using GStreamer")
+gi.overrides.Gst.NotInitialized: Please call Gst.init(argv) before using GStreamer
+ - /home/sabishi/tiktok/text2speech/app/gui.py:168

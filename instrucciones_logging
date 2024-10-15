@@ -1,0 +1,16 @@
+Aquí te dejo mi código y quiero que me ayudes a manejar errores dependiendo el caso quiero que uses:
+
+1. try y except
+2. if, elif y else
+3. assert
+4. with
+
+Pero sin olvidar que se necesita usar el logging de utils.py.
+1. log_message() incluir todos los niveles info, warning, error, critical y debug según sea el caso.
+2. log_message() incluir exc_info=True en los errores necesarios
+3. log_event_and_function(), funciona como funcion o decorador usarlo según sea conveniente, no olvidarse colocar el evento.
+4. No eliminar ninguna función, solo modificar para tener un buen debug.
+
+Aquí esta mi función.
+
+
