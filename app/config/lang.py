@@ -26,8 +26,7 @@ class Language:
             files_py = [
                 archivo[:-3] for archivo in elementos  # Quitamos el ".py" del nombre
                 if archivo.endswith('.py') and
-                   not archivo.startswith('__') and
-                   not ('__' in archivo and archivo.endswith('.py'))
+                   not archivo.startswith('__')
             ]
 
             log_message("debug", f"Archivos de idioma encontrados: {files_py}")
@@ -51,11 +50,14 @@ def generate_languages_file():
     # Ruta del archivo a crear en 'text2speech/data'
     file_path = os.path.join(data_dir, 'languages.py')
 
-    # Asegurarse de que la lista de idiomas no esté vacía
-    assert lang_list, "No se encontraron idiomas para escribir en el archivo."
+    # Comprobar que la lista de idiomas no esté vacía
+    if not lang_list:
+        log_message("error", "No se encontraron idiomas para escribir en el archivo.")
+        return  # Salir si no hay idiomas
 
     try:
-        with open(file_path, 'w') as file:
+        with open(file_path, 'w', encoding='utf-8') as file:  # Asegúrate de que se abra en UTF-8
+            file.write("# -*- coding: utf-8 -*- \n")
             file.write("LANGUAGES = [\n")
             for lang in lang_list:
                 file.write(f"    '{lang}',  # Comentario para {lang}\n")

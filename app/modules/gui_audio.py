@@ -12,11 +12,11 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt
 
 from data.languages import languages_get
-from .audio.languages_update import LanguagesUpdater
-from ..config.credentials import GoogleCloudAPIManager
-from .messages import show_status_message
-from ..utils.utils import save_file
-from ..utils.debug import log_message
+from app.modules.audio.languages_update import LanguagesUpdater
+from app.config.credentials import GoogleCloudAPIManager
+from app.modules.messages import show_status_message
+from app.utils.utils import save_file
+from app.utils.debug import log_message
 
 class AudioControls(QWidget):
     def __init__(self, parent=None):
@@ -297,7 +297,7 @@ class AudioControls(QWidget):
             show_status_message("Error al convertir el texto.")
 
     def play_audio(self):
-        from ..utils.media_control import MediaPlayer
+        from app.utils.media_control import MediaPlayer
         """Reproduce el archivo de audio temporal generado."""
         try:
             MediaPlayer().play(is_audio=True)

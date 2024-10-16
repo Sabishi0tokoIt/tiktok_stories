@@ -12,9 +12,9 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import Qt
 
-from .modules.gui_translate import TranslateControl
-from .utils.debug import log_message
-from .utils.style_sheet import (
+from app.modules.gui_translate import TranslateControl
+from app.utils.debug import log_message
+from app.utils.style_sheet import (
     dark_theme,
     light_theme,
     elegant_dark_blue_theme,
@@ -88,8 +88,8 @@ class TikTokStoriesApp(QMainWindow):
 
     def next_step(self):
         """Método que maneja la acción al presionar el botón 'Continuar'."""
-        from .modules.gui_audio import AudioControls
-        from .modules.gui_video import VideoControls
+        from app.modules.gui_audio import AudioControls
+        from app.modules.gui_video import VideoControls
 
         try:
             if self.current_step == 0:  # De TranslateControl a AudioControls

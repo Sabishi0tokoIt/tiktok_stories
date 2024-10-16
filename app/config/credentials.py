@@ -8,8 +8,8 @@ from google.auth.transport.requests import Request
 from google.cloud import texttospeech
 from google.cloud import translate
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
-from ..utils.directories import get_project_root
-from ..utils.debug import log_message, log_event_and_function
+from app.utils.directories import get_project_root
+from app.utils.debug import log_message, log_event_and_function
 
 
 class GoogleCloudAPIManager:

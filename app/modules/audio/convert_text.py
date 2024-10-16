@@ -1,26 +1,17 @@
-# app/modules/audio/convert_text.py
-
 import glob
 import os
 import time
-import gi
+import ffmpeg  # Asegúrate de importar la biblioteca FFmpeg
 
 from google.cloud import texttospeech
 
-from ...utils.directories import get_data_dir, get_tmp_dir
-from ...utils.debug import log_message
-from ..messages import show_status_message
-from ...config.credentials import GoogleCloudAPIManager
-
-gi.require_version('Gst', '1.0')
-from gi.repository import Gst
-
-# Inicializar GStreamer
-Gst.init(None)
+from app.utils.directories import get_data_dir, get_tmp_dir
+from app.utils.debug import log_message
+from app.modules.messages import show_status_message
+from app.config.credentials import GoogleCloudAPIManager
 
 # Inicializar el manejador de API de Google Cloud
 google_cloud_manager = GoogleCloudAPIManager()
-
 
 def delete_temp_mp3_files(temp_dir):
     # Asegúrate de que el directorio temporal exista
@@ -43,8 +34,6 @@ def delete_temp_mp3_files(temp_dir):
             log_message("error", f"No se tiene permiso para eliminar el archivo {mp3_file}.", exc_info=True)
         except Exception as e:
             log_message("error", f"No se pudo eliminar el archivo {mp3_file}: {e}", exc_info=True)
-
-
 
 def convert_text(parent):
     CHAR_LIMIT = 4500
@@ -122,7 +111,7 @@ def convert_text(parent):
 
         final_audio_path = os.path.join(temp_dir, 'final_temp_audio.mp3')
         show_status_message("Concatenando archivos de audio...", "info")
-        combine_audio_files_gstreamer(audio_segments, final_audio_path, parent)
+        combine_audio_files_ffmpeg(audio_segments, final_audio_path)
 
         show_status_message("Conversión finalizada", "success")
         return final_audio_path
@@ -142,43 +131,28 @@ def convert_text(parent):
         show_status_message(f"Error al convertir el texto: {str(e)}", "error")
         return None
 
-
-
 def split_text_by_paragraphs(text, max_length):
-    """
-    Divide el texto en fragmentos basados en párrafos, sin exceder la longitud máxima especificada.
-
-    :param text: El texto completo que se desea dividir.
-    :param max_length: Longitud máxima permitida para cada fragmento.
-    :return: Una lista de fragmentos de texto.
-    """
     try:
-        # Aserción para verificar que el texto no esté vacío y max_length sea positivo
         assert text, "El texto no puede estar vacío."
         assert max_length > 0, "La longitud máxima debe ser mayor que cero."
 
-        paragraphs = text.split('\n\n')  # Dividir el texto en párrafos
+        paragraphs = text.split('\n\n')
         chunks = []
         current_chunk = ""
 
         for paragraph in paragraphs:
             paragraph = paragraph.strip()
 
-            # Verificar si añadir este párrafo hace que supere el límite
             if len(current_chunk) + len(paragraph) > max_length:
-                # Comprobar si el párrafo actual por sí solo excede el límite
                 if len(current_chunk) <= max_length:
-                    # Agregar el bloque actual al conjunto de fragmentos
                     chunks.append(current_chunk.strip())
                     current_chunk = paragraph
                 else:
-                    # En caso de que el párrafo anterior sea demasiado grande, dividir allí
                     chunks.append(current_chunk.strip())
                     current_chunk = paragraph
             else:
                 current_chunk += paragraph + "\n\n"
 
-        # Asegurarse de agregar el último bloque
         if current_chunk:
             chunks.append(current_chunk.strip())
 
@@ -187,72 +161,36 @@ def split_text_by_paragraphs(text, max_length):
 
     except AssertionError as e:
         log_message("error", f"Error de aserción en split_text_by_paragraphs: {e}", exc_info=True)
-        return []  # Retornar lista vacía en caso de error
+        return []
 
     except Exception as e:
         log_message("error", f"Error inesperado en split_text_by_paragraphs: {str(e)}", exc_info=True)
-        return []  # Retornar lista vacía en caso de error inesperado
+        return []
 
-
-def combine_audio_files_gstreamer(audio_segments, output_file, parent):
+def combine_audio_files_ffmpeg(audio_segments, output_file):
     """
-    Combina archivos de audio utilizando GStreamer.
+    Combina archivos de audio utilizando FFmpeg.
 
     :param audio_segments: Lista de archivos de audio a combinar.
     :param output_file: Nombre del archivo de salida.
-    :param status_label: Etiqueta para mostrar el estado en la UI.
-    :param parent: Objeto padre que contiene los controles de audio.
     """
     try:
-        # Asegúrate de que audio_segments no esté vacío
         assert audio_segments, "No hay archivos de audio para concatenar."
 
-        # Crear el pipeline base de GStreamer
-        pipeline_desc = f"concat name=c ! audioconvert ! lamemp3enc ! filesink location={output_file}"
+        # Crear el comando de FFmpeg para concatenar archivos
+        input_args = ''.join([f"-i '{segment}' " for segment in audio_segments])
+        cmd = f"ffmpeg {input_args}-filter_complex 'concat=n={len(audio_segments)}:v=0:a=1' -y '{output_file}'"
 
-        # Agregar los archivos de audio a concatenar
-        for file in audio_segments:
-            # Validar cada archivo
-            assert isinstance(file, str) and file, f"Archivo no válido: {file}"
-            pipeline_desc = f"filesrc location={file} ! decodebin ! audioconvert ! audioresample ! c. {pipeline_desc}"
+        log_message("debug", f"Comando de FFmpeg: {cmd}")
 
-        log_message("debug", f"Pipeline de GStreamer: {pipeline_desc}")
+        # Ejecutar el comando
+        process = ffmpeg.input('pipe:0').output(output_file).global_args('-loglevel', 'error')
+        process.run()
 
-        # Crear el pipeline usando la descripción
-        pipeline = Gst.parse_launch(pipeline_desc)
-
-        # Establecer el estado a PLAYING
-        pipeline.set_state(Gst.State.PLAYING)
-
-        # Registrar el tiempo de inicio
-        start_time = time.time()
-
-        # Manejar mensajes del bus para esperar a EOS (End Of Stream)
-        bus = pipeline.get_bus()
-        message = bus.poll(Gst.MessageType.EOS, Gst.CLOCK_TIME_NONE)
-
-        if message:
-            # Registrar el tiempo de finalización y calcular el tiempo transcurrido
-            end_time = time.time()
-            elapsed_time = end_time - start_time
-            log_message("info", f"Tiempo de concatenación: {elapsed_time:.2f} segundos")
-
-            # Establecer el estado del pipeline a NULL al finalizar
-            pipeline.set_state(Gst.State.NULL)
-
-            show_status_message("Conversión de audio exitosa", "success")
-
-            # Habilitar botones tras éxito en la conversión
-            parent.audio_controls.play_button.setEnabled(True)
-            parent.audio_controls.save_button.setEnabled(True)
-        else:
-            log_message("warning", "No se recibió mensaje EOS del bus de GStreamer.")
-            show_status_message("Advertencia: No se recibió mensaje de finalización.", "warning")
-
+        show_status_message("Conversión de audio exitosa", "success")
     except AssertionError as e:
         log_message("error", f"Error de aserción: {e}", exc_info=True)
         show_status_message(str(e), "error")
-
     except Exception as e:
-        log_message("error", f"Error en combine_audio_files_gstreamer: {str(e)}", exc_info=True)
+        log_message("error", f"Error en combine_audio_files_ffmpeg: {str(e)}", exc_info=True)
         show_status_message(f"Error al combinar archivos: {str(e)}", "error")
