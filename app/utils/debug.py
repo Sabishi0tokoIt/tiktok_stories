@@ -55,7 +55,7 @@ def get_debug_critical_dir() -> Path:
 
 def get_debug_info_dir() -> Path:
     debug_dir = get_debug_dir()
-    debug_info_dir = debug_dir / 'critical'
+    debug_info_dir = debug_dir / 'info'
     debug_info_dir.mkdir(parents=True, exist_ok=True)
     return debug_info_dir
 

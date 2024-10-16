@@ -69,8 +69,6 @@ class LanguagesUpdater:
         except ImportError as e:
             log_message('error', f"No se pudo cargar el módulo para el idioma '{selected_language}': {e}",
                         exc_info=True)
-        except AssertionError as ae:
-            log_message('warning', str(ae))  # Registro de advertencia si las opciones de país están vacías
         except Exception as e:
             log_message('error', f"Unexpected error in update_country_options: {e}", exc_info=True)
 
@@ -79,9 +77,6 @@ class LanguagesUpdater:
             # Obtener el país seleccionado
             country = self.country_var.currentText()
             log_message('info', f"Selected country: {country}")
-
-            # Verificar si el país está en el mapa de países
-            assert country in self.country_map, f"Country '{country}' not in country_map."
 
             # Obtener opciones de género
             gender_options = list(self.gender_map.keys())
@@ -102,8 +97,6 @@ class LanguagesUpdater:
             # Llamar a la función para actualizar las opciones de estilo
             self.update_style_options()
 
-        except AssertionError as ae:
-            log_message('warning', str(ae))  # Registro del mensaje de advertencia si la aserción falla
         except Exception as e:
             log_message('error', f"Error updating gender options: {e}", exc_info=True)
 
@@ -116,7 +109,6 @@ class LanguagesUpdater:
 
             # Verificar que el país y el género son válidos
             if country not in self.country_map or gender not in self.gender_map:
-                log_message('warning', f"Country '{country}' or gender '{gender}' not found in mappings.")
                 return
 
             country_code = self.country_map[country]
@@ -124,8 +116,6 @@ class LanguagesUpdater:
 
             # Comprobar si hay voces disponibles para el país y género seleccionados
             if country_code not in self.voices_map or gender_code not in self.voices_map[country_code]:
-                log_message('warning',
-                            f"No voices found for country code '{country_code}' and gender code '{gender_code}'.")
                 return
 
             style_options_in_english = list(self.voices_map[country_code][gender_code].keys())
@@ -162,17 +152,14 @@ class LanguagesUpdater:
 
             # Verificar que el estilo es válido
             if style == "Selecciona un estilo" or style not in self.style_map:
-                log_message('warning', f"Style '{style}' not selected or not in style_map.")
                 return
 
             style_translated = self.style_map.get(style)
             if not style_translated:
-                log_message('warning', f"Style '{style}' not found in style_map.")
                 return
 
             # Verificar que el país y el género son válidos
             if country not in self.country_map or gender not in self.gender_map:
-                log_message('warning', f"Country '{country}' or gender '{gender}' not found in mappings.")
                 return
 
             country_code = self.country_map[country]
@@ -180,13 +167,9 @@ class LanguagesUpdater:
 
             # Comprobar si hay voces disponibles para el país y género seleccionados
             if country_code not in self.voices_map or gender_code not in self.voices_map[country_code]:
-                log_message('warning',
-                            f"No voices found for country code '{country_code}' and gender code '{gender_code}'.")
                 return
 
             if style_translated not in self.voices_map[country_code][gender_code]:
-                log_message('warning',
-                            f"Style '{style_translated}' not found for country code '{country_code}' and gender code '{gender_code}'.")
                 return
 
             # Obtener opciones de voz y actualizar el menú de voces

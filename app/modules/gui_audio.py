@@ -1,4 +1,6 @@
 # app/modules/gui_audio.py
+
+import re
 from PyQt5.QtWidgets import (
     QWidget,
     QHBoxLayout,
@@ -17,6 +19,7 @@ from app.config.credentials import GoogleCloudAPIManager
 from app.modules.messages import show_status_message
 from app.utils.utils import save_file
 from app.utils.debug import log_message
+from app.utils.media_control import MediaPlayer
 
 class AudioControls(QWidget):
     def __init__(self, parent=None):
@@ -121,8 +124,15 @@ class AudioControls(QWidget):
                 text_content = ""
 
             # Establecer el contenido en el widget de entrada de texto
-            combined_content = f"{title_content}\n{text_content}"
-            self.text_entry.setPlainText(combined_content)  # Usa setPlainText si es QTextEdit
+            combined_content = f"{title_content}\n\n{text_content}"
+
+            # Limpiar el contenido para eliminar saltos de línea innecesarios
+            cleaned_content = re.sub(r'\n+', '\n\n', combined_content)  # Reemplaza múltiples saltos de línea con uno doble
+            cleaned_content = re.sub(r'\s*\n\s*', ' ', cleaned_content)  # Elimina espacios antes y después de los saltos de línea
+            cleaned_content = re.sub(r' {2,}', ' ', cleaned_content)  # Reemplaza múltiples espacios por uno solo
+            cleaned_content = re.sub(r'(?<=[.!?])\s+', '\n\n', cleaned_content)  # Agrega doble salto de línea después de oraciones
+
+            self.text_entry.setPlainText(cleaned_content)  # Usa setPlainText si es QTextEdit
             log_message("info", "Contenido de los archivos cargado en el widget de entrada de texto.")
 
         except Exception as e:
@@ -203,7 +213,7 @@ class AudioControls(QWidget):
 
         self.play_button = QPushButton("Reproducir Audio")
         self.play_button.clicked.connect(self.play_audio)
-        self.play_button.setEnabled(False)  # Deshabilitado por defecto
+        self.play_button.setEnabled(True)  # Deshabilitado por defecto
         self.audio_button_layout.addWidget(self.play_button)
 
         self.stop_button = QPushButton("Detener reproducción")
@@ -297,10 +307,10 @@ class AudioControls(QWidget):
             show_status_message("Error al convertir el texto.")
 
     def play_audio(self):
-        from app.utils.media_control import MediaPlayer
         """Reproduce el archivo de audio temporal generado."""
         try:
-            MediaPlayer().play(is_audio=True)
+            media_player = MediaPlayer()  # Obtener la instancia singleton
+            media_player.play(play_type='audio')  # Reproduce solo audio
             log_message("success", "Audio reproducido exitosamente.")
             self.play_button.setEnabled(False)  # Deshabilitar el botón de reproducir
             self.stop_button.setEnabled(True)  # Habilitar el botón de detener
@@ -309,16 +319,16 @@ class AudioControls(QWidget):
             show_status_message(f"Error al reproducir el archivo de audio: {e}", "error")
 
     def stop_audio(self):
-        from ..utils.media_control import MediaPlayer
-        """Detiene la reproducción del archivo de audio temporal."""
+        """Detiene la reproducción de audio y video."""
         try:
-            MediaPlayer().stop()
-            log_message("success", "Audio detenido exitosamente.")
-            self.play_button.setEnabled(True)  # Habilitar el botón de reproducir
+            media_player = MediaPlayer()  # Obtener la instancia singleton
+            media_player.stop()  # Detener la reproducción
+            log_message("success", "Audio y video detenidos exitosamente.")
             self.stop_button.setEnabled(False)  # Deshabilitar el botón de detener
+            self.play_button.setEnabled(True)  # Habilitar el botón de reproducir
         except Exception as e:
-            log_message("error", f"Error al detener el audio en reproducción.", exc_info=True)
-            show_status_message("Error al detener el audio en reproducción.", "error")
+            log_message("error", f"Error al detener la reproducción: {e}", exc_info=True)
+            show_status_message(f"Error al detener la reproducción: {e}", "error")
 
     def save_audio(self):
         log_message("debug", "Guardando audio.")
