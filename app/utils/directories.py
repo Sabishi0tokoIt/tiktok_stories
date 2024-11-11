@@ -55,3 +55,10 @@ def get_videos_dir() -> Path:
     videos_dir = project_root / 'includes' / 'videos'
     videos_dir.mkdir(parents=True, exist_ok=True)
     return videos_dir
+
+
+def get_images_dir() -> Path:
+    project_root = get_project_root()
+    images_dir = project_root / 'includes' / 'images'
+    images_dir.mkdir(parents=True, exist_ok=True)
+    return images_dir
