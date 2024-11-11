@@ -4,14 +4,15 @@ import os
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
-from app.utils.directories import get_project_root
+from app.utils.directories import get_project_root,  get_images_dir
 from app.utils.debug import log_message
 from app.utils.style_sheet import dark_theme
 # Obtener la ruta raíz del proyecto
 project_root = get_project_root()
+images_dir_path = get_images_dir()
 
 # Combinar la ruta raíz con la ruta de la imagen
-image_path = os.path.join(project_root, 'includes', 'images', 'fondo.jpg')
+image_path = os.path.join(images_dir_path, 'fondo.jpg')
 
 
 class MainApp(QWidget):
